@@ -23,29 +23,36 @@ Author: Tomasz Kozik
 ### Maven by pom.xml
 * Project configuration:
   * Test suites
-* Base configuration
+* Appium configuration
   * Node path
-  * Appium parth, url, port
+  * Appium parth
   * Bootstrap port
   * System port
-* Phone parameters
-  * Android version
-  * Android serial number
-  * Phone number
-* Phone settings
-  * Language and locale
+* App configuration
+  * AutomationName
+  * Platform name
+  * Platform version
+  * Default language and locale
+* Device parameters
+  * Device serial number
+  * Device name
 
 #### Examples
 ##### Samsung A51
-mvn test -DskipTests -Ddevice.name=Samsung_A51 -Ddevice.phoneNumber=+48660401755 -Ddevice.serial=R58N138DRRM -Dplatform.Version=10 -Dappium.nodeJsPath=C:\Programy\nodejs\node.exe -Dappium.appiumJsPath=C:\Users\socia\node_modules\appium\build\lib\main.js
+mvn test -DskipTests -Ddevice.name=Samsung_A51 -Ddevice.serial=R58N138DRRM -Dplatform.Version=10 -Dappium.nodeJsPath=C:\Programy\nodejs\node.exe -Dappium.appiumJsPath=C:\Users\socia\node_modules\appium\build\lib\main.js
 ##### Maxcom MS553
-mvn test -DskipTests -Ddevice.name=Maxcom_MS553 -Ddevice.phoneNumber=+48784981829 -Ddevice.serial=0123456789ABCDEF -Dplatform.Version=7 -Dappium.nodeJsPath=C:\Programy\nodejs\node.exe -Dappium.appiumJsPath=C:\Users\socia\node_modules\appium\build\lib\main.js
+mvn test -DskipTests -Ddevice.name=Maxcom_MS553 -Ddevice.serial=0123456789ABCDEF -Dplatform.Version=7 -Dappium.nodeJsPath=C:\Programy\nodejs\node.exe -Dappium.appiumJsPath=C:\Users\socia\node_modules\appium\build\lib\main.js
 
 ### Constants
-* Application package and activity _core.config.AppConfig_
-* DateTimeFormat _core.config.DateTimeFormat_
-* Paths _core.config.project.Paths_
-* Ocular _core.config.project.OcularConfig_
+* _core.config.project.ProjectProperties_:
+  * cleanNotification - true if always clean and close notification before tests
+  * changeWiFiConnection - true if changed state before tests
+  * changeDataConnection - true if changed state before tests
+* _core.config.AppConfig_
+  * Application package and activity 
+* _core.config.DateTimeFormat_ - DateTimeFormat 
+* _core.config.project.Paths_ - paths for project
+* _core.config.project.OcularConfig_ - ocular configuration
 
 
 
