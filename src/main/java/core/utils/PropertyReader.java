@@ -18,15 +18,12 @@ public class PropertyReader {
     private static URL propertyFileUrl;
     private static String propertyFileName;
 
-    private static URL getUrl(String propertyFileName) {
-        return ProjectProperties.class.getClassLoader().getResource(propertyFileName);
-    }
-
-    public static void showListOfProperties(java.util.Properties properties) {
-        for (String key : properties.stringPropertyNames()) {
-            String propertyInfo = String.format("Property: %s = %s", key, properties.getProperty(key));
-            System.out.println(propertyInfo);
+    public static Properties getListOfProperties(String expectedPropertyFileName) {
+        propertyFileName = expectedPropertyFileName;
+        if (areThePropertiesEmpty() && isPropertyFileUrl()) {
+            loadListOfProperties();
         }
+        return properties;
     }
 
     public static boolean areThePropertiesEmpty() {
@@ -56,11 +53,14 @@ public class PropertyReader {
         }
     }
 
-    public static Properties getListOfProperties(String expectedPropertyFileName) {
-        propertyFileName = expectedPropertyFileName;
-        if (areThePropertiesEmpty() && isPropertyFileUrl()) {
-            loadListOfProperties();
+    private static URL getUrl(String propertyFileName) {
+        return ProjectProperties.class.getClassLoader().getResource(propertyFileName);
+    }
+
+    public static void showListOfProperties(java.util.Properties properties) {
+        for (String key : properties.stringPropertyNames()) {
+            String propertyInfo = String.format("Property: %s = %s", key, properties.getProperty(key));
+            System.out.println(propertyInfo);
         }
-        return properties;
     }
 }
