@@ -40,8 +40,8 @@ public abstract class BasePage {
      * Metoda asercyjna do robienia zrzutów ekranów pojedynczego elementu i porównaniu go z oryginałem
      * Page obsługujący poniższą metodę musi mieć andotację @Snap("#{CLASS_NAME}-#{DESCRIPTION}.png")
      *
-     * @param description przyjmuje dowolny tekst, który powinien określić nazwę testu np. 'Login_DlugaNazwa'
      * @param element Android element do weryfikacji
+     * @param description przyjmuje dowolny tekst, który powinien określić nazwę testu np. 'Login_DlugaNazwa'
      */
     public void assertThatScreenOfElementIsCorrect(AndroidElement element, String description) {
         await("Wait for the differences to be checked by ocular")

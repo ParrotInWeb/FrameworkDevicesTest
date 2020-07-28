@@ -2,16 +2,16 @@ package core.config.project;
 
 import java.util.Properties;
 
-import static core.utils.PropertyReader.listOfProperties;
+import static core.utils.PropertyReader.getListOfProperties;
 
 public class ProjectProperties {
 
-    public static boolean cleanNotification = true;
+    public static boolean clearNotification = true;
     public static boolean changeWiFiConnection = true;
     public static boolean changeDataConnection = true;
 
     private static Properties appProperties() {
-        return listOfProperties("application.properties");
+        return getListOfProperties("application.properties");
     }
 
     public static String getNodeJsPath() {

@@ -1,4 +1,4 @@
-package core.page.android;
+package core.helpers;
 
 import core.adb.AdbCommandExecutor;
 import core.config.project.ProjectProperties;
@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
 
-public class AndroidPagesAndUtils extends BasePage {
+public class AndroidFunctions extends BasePage {
 
-    final static Logger logger = Logger.getLogger(AndroidPagesAndUtils.class);
-    public AndroidPagesAndUtils(AndroidDriver<AndroidElement> driver) { super(driver); }
+    final static Logger logger = Logger.getLogger(AndroidFunctions.class);
+    public AndroidFunctions(AndroidDriver<AndroidElement> driver) { super(driver); }
 
     @Override
     protected void waitUntilPageIsLoaded() {}
@@ -29,7 +29,7 @@ public class AndroidPagesAndUtils extends BasePage {
     }
 
     @Step("WiFi enabled")
-    public void wiFiEnabled() {
+    public void turnOnWiFi() {
         if (ProjectProperties.changeWiFiConnection && !driver.getConnection().isWiFiEnabled()) {
             driver.setConnection(new ConnectionStateBuilder().withWiFiEnabled().build());
             await("Wait for enable wifi")
@@ -40,7 +40,7 @@ public class AndroidPagesAndUtils extends BasePage {
     }
 
     @Step("WiFi disabled")
-    public void wiFiDisabled() {
+    public void turnOffWiFi() {
         if (ProjectProperties.changeWiFiConnection && driver.getConnection().isWiFiEnabled()) {
             driver.setConnection(new ConnectionStateBuilder().withWiFiDisabled().build());
             await("Wait for disable wifi")

@@ -20,7 +20,7 @@ public abstract class AppiumBaseTest {
 
     @Step("Set up appium server")
     @BeforeSuite
-    public void startAppiumServerAndSetUp() {
+    public void startAppiumServerAndSetUpApplication() {
         this.appiumFactory = new AppiumServerFactory();
         this.appiumFactory.startAppiumServer();
         OcularConfig.mkdirForScreens();
@@ -34,11 +34,10 @@ public abstract class AppiumBaseTest {
             this.driver = DriverFactory.driver;
             initPages();
             AdbCommandExecutor.dataDisabled();
-            androidPagesAndUtils.wiFiEnabled();
+            androidFunctions.turnOnWiFi();
             notificationPage.clearAllNotifications();
         }
     }
-
 
     @AfterSuite
     public void stopAppiumServerAndCleanUp() {

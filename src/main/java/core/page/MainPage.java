@@ -17,7 +17,7 @@ public class MainPage extends BasePage {
 
     @Override
     protected void waitUntilPageIsLoaded() {
-        Waiter.waitForElementVisibility(logo);
+        Waiter.waitForVisibilityOfElement(logo);
     }
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='AIDA64']")

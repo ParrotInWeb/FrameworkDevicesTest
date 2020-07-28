@@ -1,6 +1,7 @@
 package core.page.android;
 
 import core.config.project.ProjectProperties;
+import core.helpers.AndroidFunctions;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -10,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
-public class NotificationPage extends AndroidPagesAndUtils {
+public class NotificationPage extends AndroidFunctions {
 
     final static Logger logger = Logger.getLogger(NotificationPage.class);
     public NotificationPage(AndroidDriver<AndroidElement> driver) { super(driver); }
@@ -29,14 +30,27 @@ public class NotificationPage extends AndroidPagesAndUtils {
     private List<AndroidElement> clearAllBtn;
 
     public void clearAllNotifications() {
-        if (ProjectProperties.cleanNotification) {
+        if (isFunctionNotificationClearingSetOn()) {
             driver.openNotifications();
-            if (!clearAllBtn.isEmpty() && clearAllBtn.get(0).getAttribute("enabled").equals("true")) {
-                clearAllBtn.get(0).click();
-                logger.info("Notification was cleaned");
+            if (areNotificationToClear()) {
+                getClearNotificationButton().click();
+                logger.info("Notification was cleared");
             } else {
                 clickBack();
             }
         }
     }
+
+    public boolean isFunctionNotificationClearingSetOn() {
+        return ProjectProperties.clearNotification;
+    }
+
+    public boolean areNotificationToClear() {
+        return !clearAllBtn.isEmpty() && getClearNotificationButton().getAttribute("enabled").equals("true");
+    }
+
+    public AndroidElement getClearNotificationButton() {
+        return clearAllBtn.get(0);
+    }
+
 }

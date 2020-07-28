@@ -14,7 +14,7 @@ public class Waiter {
     private static int pollInterval = 100;
     final static Logger logger = Logger.getLogger(Waiter.class);
 
-    public static void waitForElementVisibility(AndroidElement element) {
+    public static void waitForVisibilityOfElement(AndroidElement element) {
         await("Wait for visibility of element")
                 .atMost(timeout, TimeUnit.SECONDS)
                 .pollInterval(pollInterval, TimeUnit.MILLISECONDS)
