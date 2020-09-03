@@ -6,14 +6,14 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.qameta.allure.Step;
-import org.apache.log4j.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MainPage extends BasePage {
 
-    final static Logger logger = Logger.getLogger(MainPage.class);
-    public MainPage(AndroidDriver< AndroidElement > driver) { super(driver); }
+    public MainPage(AndroidDriver<AndroidElement> driver) {
+        super(driver);
+    }
 
     @Override
     protected void waitUntilPageIsLoaded() {

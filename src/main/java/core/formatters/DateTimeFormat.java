@@ -1,4 +1,4 @@
-package core.config;
+package core.formatters;
 
 import java.time.format.DateTimeFormatter;
 

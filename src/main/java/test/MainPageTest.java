@@ -11,7 +11,7 @@ import test.base.AppiumBaseTest;
 import static core.factories.ClassesWithDriverFactory.mainPage;
 
 @Listeners(TestNgCoreListener.class)
-@Feature("Testy strony głównej")
+@Feature("MainPage test")
 public class MainPageTest extends AppiumBaseTest {
 
     @AfterMethod

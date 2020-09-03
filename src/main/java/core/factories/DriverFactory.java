@@ -1,7 +1,7 @@
 package core.factories;
 
-import core.adb.AdbCommandExecutor;
-import core.config.project.ProjectProperties;
+import core.adb.AdbCmdExecutor;
+import core.config.AppProperties;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.apache.log4j.Logger;
@@ -17,8 +17,8 @@ public class DriverFactory {
     }
 
     private void connectToDevice(DesiredCapabilities desiredCapabilities) {
-        AdbCommandExecutor.adbConnect();
+        AdbCmdExecutor.connect(AppProperties.getDevice());
         driver = new AndroidDriver<>(AppiumServerFactory.getUrl(), desiredCapabilities);
-        logger.info("Connected to device: " + ProjectProperties.getDevice());
+        logger.info("Connected to device: " + AppProperties.getDevice());
     }
 }

@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class AllureAttachment {
+
     final static Logger logger = Logger.getLogger(ScreenShooter.class);
 
     public static void attachScreen(String attachmentName, String fileName) {

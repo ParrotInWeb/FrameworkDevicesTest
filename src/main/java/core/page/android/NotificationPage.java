@@ -1,6 +1,6 @@
 package core.page.android;
 
-import core.config.project.ProjectProperties;
+import core.config.AppProperties;
 import core.helpers.AndroidFunctions;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -14,10 +14,14 @@ import java.util.List;
 public class NotificationPage extends AndroidFunctions {
 
     final static Logger logger = Logger.getLogger(NotificationPage.class);
-    public NotificationPage(AndroidDriver<AndroidElement> driver) { super(driver); }
+
+    public NotificationPage(AndroidDriver<AndroidElement> driver) {
+        super(driver);
+    }
 
     @Override
-    protected void waitUntilPageIsLoaded() { }
+    protected void waitUntilPageIsLoaded() {
+    }
 
     @AndroidFindBy(id = "android:id/status_bar_latest_event_content")
     private List<AndroidElement> allNotificationContainer;
@@ -30,7 +34,7 @@ public class NotificationPage extends AndroidFunctions {
     private List<AndroidElement> clearAllBtn;
 
     public void clearAllNotifications() {
-        if (isFunctionNotificationClearingSetOn()) {
+        if (AppProperties.STATE_OF_NOTIFICATIONS) {
             driver.openNotifications();
             if (areNotificationToClear()) {
                 getClearNotificationButton().click();
@@ -39,10 +43,6 @@ public class NotificationPage extends AndroidFunctions {
                 clickBack();
             }
         }
-    }
-
-    public boolean isFunctionNotificationClearingSetOn() {
-        return ProjectProperties.clearNotification;
     }
 
     public boolean areNotificationToClear() {

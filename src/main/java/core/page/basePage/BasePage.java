@@ -1,13 +1,13 @@
 package core.page.basePage;
+
 import com.testautomationguru.ocular.Ocular;
-import core.config.project.Paths;
-import core.config.project.ProjectProperties;
+import core.config.OcularConfig;
+import core.config.AppProperties;
 import core.testTools.AllureAttachment;
 import core.testTools.ScreenShooter;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 
@@ -19,7 +19,6 @@ import static org.awaitility.Awaitility.await;
 
 public abstract class BasePage {
 
-    final static Logger logger = Logger.getLogger(BasePage.class);
     public AndroidDriver<AndroidElement> driver;
 
     public BasePage(AndroidDriver<AndroidElement> driver) {
@@ -31,8 +30,8 @@ public abstract class BasePage {
     protected abstract void waitUntilPageIsLoaded();
 
     public ResourceBundle getTranslation() {
-        String language = ProjectProperties.getDefaultLanguage();
-        String locale = ProjectProperties.getDefaultLocale();
+        String language = AppProperties.getDefaultLanguage();
+        String locale = AppProperties.getDefaultLocale();
         return ResourceBundle.getBundle("MessagesBundle", new Locale(language, locale));
     }
 
@@ -40,7 +39,7 @@ public abstract class BasePage {
      * Metoda asercyjna do robienia zrzutów ekranów pojedynczego elementu i porównaniu go z oryginałem
      * Page obsługujący poniższą metodę musi mieć andotację @Snap("#{CLASS_NAME}-#{DESCRIPTION}.png")
      *
-     * @param element Android element do weryfikacji
+     * @param element     Android element do weryfikacji
      * @param description przyjmuje dowolny tekst, który powinien określić nazwę testu np. 'Login_DlugaNazwa'
      */
     public void assertThatScreenOfElementIsCorrect(AndroidElement element, String description) {
@@ -49,9 +48,9 @@ public abstract class BasePage {
                 .pollInterval(100, TimeUnit.MILLISECONDS)
                 .ignoreException(NoSuchElementException.class)
                 .until(() -> {
-                    AllureAttachment.attachScreen("DiffScreen", Paths.ocularResultPath + this.getClass().getSimpleName() + "-" + description + ".png");
-                    AllureAttachment.attachScreen("ExpectedScreen", Paths.ocularSnapshotPath + this.getClass().getSimpleName() + "-" + description + ".png");
-                    ScreenShooter.takeScreenshot(driver,"Actual full screen");
+                    AllureAttachment.attachScreen("DiffScreen", OcularConfig.OCULAR_RESULT_PATH + this.getClass().getSimpleName() + "-" + description + ".png");
+                    AllureAttachment.attachScreen("ExpectedScreen", OcularConfig.OCULAR_SNAPSHOT_PATH + this.getClass().getSimpleName() + "-" + description + ".png");
+                    ScreenShooter.takeScreenshot(driver, "Actual full screen");
                     return Ocular.snapshot()
                             .from(this)
                             .replaceAttribute("CLASS_NAME", this.getClass().getSimpleName())

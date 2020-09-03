@@ -1,10 +1,11 @@
 package test.base;
 
+import core.config.AppProperties;
 import core.factories.AppiumServerFactory;
 import core.factories.CapabilitiesFactory;
 import core.factories.DriverFactory;
-import core.adb.AdbCommandExecutor;
-import core.config.project.OcularConfig;
+import core.adb.AdbCmdExecutor;
+import core.config.OcularConfig;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.qameta.allure.Step;
@@ -14,16 +15,17 @@ import static core.factories.ClassesWithDriverFactory.*;
 
 public abstract class AppiumBaseTest {
 
+    protected AndroidDriver<AndroidElement> driver = null;
     private AppiumServerFactory appiumFactory = null;
     private DriverFactory driverConnection = null;
-    protected AndroidDriver<AndroidElement> driver = null;
+    private String deviceNumber = AppProperties.getDevice();
 
     @Step("Set up appium server")
     @BeforeSuite
     public void startAppiumServerAndSetUpApplication() {
         this.appiumFactory = new AppiumServerFactory();
         this.appiumFactory.startAppiumServer();
-        OcularConfig.mkdirForScreens();
+        OcularConfig.mkdirsForScreens();
         connectAndSetUpDriver();
     }
 
@@ -33,7 +35,9 @@ public abstract class AppiumBaseTest {
             this.driverConnection = new DriverFactory(CapabilitiesFactory.getTruckerCapabilities());
             this.driver = DriverFactory.driver;
             initPages();
-            AdbCommandExecutor.dataDisabled();
+            if (!AppProperties.STATE_OF_DATA_CONNECTION) {
+                AdbCmdExecutor.dataDisable(deviceNumber);
+            }
             androidFunctions.turnOnWiFi();
             notificationPage.clearAllNotifications();
         }
@@ -41,7 +45,7 @@ public abstract class AppiumBaseTest {
 
     @AfterSuite
     public void stopAppiumServerAndCleanUp() {
-        AdbCommandExecutor.disconnectByIp();
+        AdbCmdExecutor.disconnect(deviceNumber);
         if (appiumFactory != null) {
             this.appiumFactory.stopAppiumServer();
         }

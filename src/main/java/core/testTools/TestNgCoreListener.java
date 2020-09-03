@@ -13,18 +13,13 @@ public class TestNgCoreListener extends TestListenerAdapter {
 
     @Override
     public void onTestFailure(final ITestResult tr) {
-        final Throwable res = tr.getThrowable();
-        if (res != null) {
-            logger.error("Test Failed with exception: " + res);
+        final Throwable result = tr.getThrowable();
+        if (result != null) {
+            logger.error("Test Failed with exception: " + result);
         } else {
             logger.error("Test Failed");
         }
-        try {
-            logger.info("Taking screenshot");
-            ScreenShooter.takeScreenshot(getActualWebBrowser(tr), "Failure");
-        } catch (final Exception ex) {
-            logger.warn(ex.toString());
-        }
+        takeScreenShot(tr, "Failure");
     }
 
     @Override
@@ -34,15 +29,19 @@ public class TestNgCoreListener extends TestListenerAdapter {
 
     @Override
     public void onTestSkipped(final ITestResult tr) {
-        final Throwable res = tr.getThrowable();
-        if (res != null) {
-            logger.warn("Test Skipped with exception: " + res);
+        final Throwable result = tr.getThrowable();
+        if (result != null) {
+            logger.warn("Test Skipped with exception: " + result);
         } else {
             logger.warn("Test Skipped");
         }
+        takeScreenShot(tr, "Skipped");
+    }
+
+    private void takeScreenShot(ITestResult tr, String attachmentName) {
         try {
             logger.info("Taking screenshot");
-            ScreenShooter.takeScreenshot(getActualWebBrowser(tr), "Skipped");
+            ScreenShooter.takeScreenshot(getActualWebBrowser(tr), attachmentName);
         } catch (final Exception ex) {
             logger.warn(ex.toString());
         }

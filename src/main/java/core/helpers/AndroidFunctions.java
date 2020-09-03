@@ -1,7 +1,7 @@
 package core.helpers;
 
-import core.adb.AdbCommandExecutor;
-import core.config.project.ProjectProperties;
+import core.adb.AdbCmdExecutor;
+import core.config.AppProperties;
 import core.page.basePage.BasePage;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -9,7 +9,6 @@ import io.appium.java_client.android.connection.ConnectionStateBuilder;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.qameta.allure.Step;
-import org.apache.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,11 +16,13 @@ import static org.awaitility.Awaitility.await;
 
 public class AndroidFunctions extends BasePage {
 
-    final static Logger logger = Logger.getLogger(AndroidFunctions.class);
-    public AndroidFunctions(AndroidDriver<AndroidElement> driver) { super(driver); }
+    public AndroidFunctions(AndroidDriver<AndroidElement> driver) {
+        super(driver);
+    }
 
     @Override
-    protected void waitUntilPageIsLoaded() {}
+    protected void waitUntilPageIsLoaded() {
+    }
 
     @Step("Click android BACk")
     public void clickBack() {
@@ -30,18 +31,18 @@ public class AndroidFunctions extends BasePage {
 
     @Step("WiFi enabled")
     public void turnOnWiFi() {
-        if (ProjectProperties.changeWiFiConnection && !driver.getConnection().isWiFiEnabled()) {
+        if (AppProperties.STATE_OF_WI_FI_CONNECTION && !driver.getConnection().isWiFiEnabled()) {
             driver.setConnection(new ConnectionStateBuilder().withWiFiEnabled().build());
             await("Wait for enable wifi")
                     .pollInterval(100, TimeUnit.MILLISECONDS)
                     .atMost(30, TimeUnit.SECONDS)
-                    .until(() -> driver.getConnection().isWiFiEnabled() && AdbCommandExecutor.isWifiOn());
+                    .until(() -> driver.getConnection().isWiFiEnabled() && AdbCmdExecutor.isWiFiIpSet(AppProperties.getDevice()));
         }
     }
 
     @Step("WiFi disabled")
     public void turnOffWiFi() {
-        if (ProjectProperties.changeWiFiConnection && driver.getConnection().isWiFiEnabled()) {
+        if (AppProperties.STATE_OF_WI_FI_CONNECTION && driver.getConnection().isWiFiEnabled()) {
             driver.setConnection(new ConnectionStateBuilder().withWiFiDisabled().build());
             await("Wait for disable wifi")
                     .pollInterval(100, TimeUnit.MILLISECONDS)

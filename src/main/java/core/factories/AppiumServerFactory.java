@@ -1,6 +1,6 @@
 package core.factories;
 
-import core.config.project.ProjectProperties;
+import core.config.AppProperties;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.AndroidServerFlag;
@@ -15,8 +15,8 @@ public class AppiumServerFactory {
 
     final static Logger logger = Logger.getLogger(AppiumServerFactory.class);
 
-    private static final String APPIUM_PATH = ProjectProperties.getAppiumPath();
-    private static final String NODE_PATH = ProjectProperties.getNodeJsPath();
+    private static final String APPIUM_PATH = AppProperties.getAppiumPath();
+    private static final String NODE_PATH = AppProperties.getNodeJsPath();
     private static AppiumDriverLocalService service;
 
     @Step("Start Appium server")
@@ -28,7 +28,7 @@ public class AppiumServerFactory {
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "warn")
                 .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
                 .withArgument(AndroidServerFlag.SUPPRESS_ADB_KILL_SERVER)
-                .withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, ProjectProperties.getBootstrapPort())
+                .withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, AppProperties.getBootstrapPort())
                 .usingAnyFreePort()
                 .build();
 

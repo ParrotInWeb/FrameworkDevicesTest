@@ -38,7 +38,7 @@ public class Waiter {
                 .until(() -> element.getText().equals(expectedText) && element.getAttribute("enabled").equals("true") && element.getAttribute("clickable").equals("true"));
     }
 
-    public static void wait(int time){
+    public static void wait(int time) {
         logger.info("Sleep for milliseconds: " + time);
         try {
             Thread.sleep(time);
