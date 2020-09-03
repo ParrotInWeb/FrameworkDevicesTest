@@ -14,24 +14,19 @@ public class AdbCmdExecutor {
     final static Logger logger = Logger.getLogger(AppiumServerFactory.class);
 
     public static void connect(String deviceNumber) {
-        await("Wait until device " + deviceNumber + " is connected")
-                .atMost(60, TimeUnit.SECONDS)
-                .pollInterval(5, TimeUnit.SECONDS)
-                .until(() -> {
-                    connectByIpIfSet(deviceNumber);
-                    return isDeviceConnected(deviceNumber);
-                });
-    }
-
-    private static void connectByIpIfSet(String deviceNumber) {
-        if (deviceNumber.contains(".")) {
-            controller.setCommand(CONNECT, deviceNumber);
-            controller.executeCommand();
+        if (!isDeviceConnected(deviceNumber)) {
+            await("Wait until device " + deviceNumber + " is connected")
+                    .atMost(60, TimeUnit.SECONDS)
+                    .pollInterval(5, TimeUnit.SECONDS)
+                    .until(() -> {
+                        connectByIpIfSet(deviceNumber);
+                        return isDeviceConnected(deviceNumber);
+                    });
         }
     }
 
     private static boolean isDeviceConnected(String deviceNumber) {
-        if (!getListOfDevices().contains(deviceNumber + "device")) {
+        if (!getListOfDevices().contains(deviceNumber)) {
             logger.error("Device " + deviceNumber + " is not connected");
             return false;
         }
@@ -43,6 +38,13 @@ public class AdbCmdExecutor {
         return controller
                 .executeCommandAndGetResult()
                 .replaceAll("[ \t\n]", "");
+    }
+
+    private static void connectByIpIfSet(String deviceNumber) {
+        if (deviceNumber.contains(".")) {
+            controller.setCommand(CONNECT, deviceNumber);
+            controller.executeCommand();
+        }
     }
 
     public static void disconnect(String deviceNumber) {
