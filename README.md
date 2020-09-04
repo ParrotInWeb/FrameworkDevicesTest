@@ -1,5 +1,7 @@
 # DeTeFra- Devices Tests Framework
 
+![](https://img.shields.io/badge/version-1.0.0-blue) ![](https://img.shields.io/badge/author-Tomasz%20Kozik-blue) 
+
 ## What is it?
 DeTeFra is a framework by which we quickly run automatic tests of mobile devices on Android and IoS. This framework is based on Appium.
 
